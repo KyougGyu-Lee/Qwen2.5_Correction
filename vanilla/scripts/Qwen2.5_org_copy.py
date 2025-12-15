@@ -1,0 +1,202 @@
+"""
+Contradiction Detection and Correction using Qwen2.5-0.5B-Instruct
+
+6가지 오류 유형 탐지 및 수정:
+1. Arithmetic/Total Inconsistency - 산술/총합 불일치
+2. Unit/Measurement Mismatch - 단위/측정 불일치
+3. Temporal Order/Duration Inconsistency - 시간 순서/기간 불일치
+4. Spatial Relation Inconsistency - 공간 관계 불일치
+5. Pronoun/Referent Ambiguity - 대명사/지시 대상 모호성
+6. Action-Agent/Object Mismatch - 행위-행위자/대상 불일치
+"""
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import json
+import re
+from dataclasses import dataclass
+from typing import Optional
+from pathlib import Path
+
+
+ERROR_TYPES = {
+    1: "Arithmetic/Total Inconsistency",
+    2: "Unit/Measurement Mismatch",
+    3: "Temporal Order/Duration Inconsistency",
+    4: "Spatial Relation Inconsistency",
+    5: "Pronoun/Referent Ambiguity",
+    6: "Action-Agent/Object Mismatch",
+}
+
+
+@dataclass
+class DetectionResult:
+    """탐지 결과"""
+    sentence: str
+    error_type: int
+    explanation: str
+    corrected_sentence: Optional[str]
+
+
+class ContradictionDetector:
+    def __init__(self, model_name: str = "Qwen/Qwen2.5-7B-Instruct", device: str = "auto"):
+        print(f"Loading model: {model_name}")
+
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+
+        device_map = "auto" if device == "auto" else {"": 0 if device == "cuda" else "cpu"}
+
+        self.model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+            device_map=device_map,
+            trust_remote_code=True
+        )
+        self.model.eval()
+        self.device = next(self.model.parameters()).device
+        print(f"Model loaded. Device: {self.device}")
+
+    def _create_prompt(self, sentence: str) -> str:
+        return f"""You are an expert at detecting logical and semantic errors in text.
+The following sentence contains exactly ONE error. Identify the error type and correct it.
+
+## Error Types:
+1. Arithmetic/Total Inconsistency - Numbers don't add up correctly
+   Examples:
+   - "The box has 8 chocolates: 3 dark and 6 milk." (3+6=9 ≠ 8)
+   - "Our family has 5 people: my parents, my sister, and me." (2+1+1=4 ≠ 5)
+   - "The playlist has 12 songs: 7 pop and 4 rock." (7+4=11 ≠ 12)
+
+2. Unit/Measurement Mismatch - Wrong or inappropriate units for the context
+   Examples:
+   - "The baby weighs 50 centimeters." (weight should use kg/lbs, not cm)
+   - "The pool is 3 kilograms deep." (depth should use meters/feet, not kg)
+   - "The movie is 2 kilometers long." (duration should use hours/minutes, not km)
+
+3. Temporal Order/Duration Inconsistency - Events in impossible chronological order
+   Examples:
+   - "He retired in 2010 and started working in 2015." (retired before starting work)
+   - "She received the diploma in 2018 and enrolled in 2020." (graduated before enrolling)
+   - "The store closed at 8 PM and opened at 10 PM the same day." (closed before opening)
+
+4. Spatial Relation Inconsistency - Contradictory location/position statements
+   Examples:
+   - "The park is east of the library, but also west of the library."
+   - "The cat is under the bed, but also on top of the roof at the same time."
+   - "The office is on the 5th floor, but also in the basement."
+
+5. Pronoun/Referent Ambiguity - Pronouns that refer to the wrong person, creating logical contradictions
+   Examples:
+   - "Tom emailed Sarah after he finished her report." (should be "she finished her report" - Sarah finished her own report)
+   - "John called Mike when he lost his keys." (should be "Mike lost his keys" if John is calling to help)
+   - "Amy thanked Bob because he passed the exam." (should be "she passed" - Amy is thanking for her own success)
+
+6. Action-Agent/Object Mismatch - Inanimate objects performing human/animate actions
+   Examples:
+   - "The pencil complained about the noise."
+   - "The window dreamed of becoming famous."
+   - "The coffee table ran to catch the bus."
+
+## Input Sentence (contains ONE error):
+"{sentence}"
+
+## Task:
+Identify the error type (1-6) and provide the corrected sentence. Respond ONLY with a valid JSON object:
+
+```json
+{{
+  "error_type": 1-6,
+  "explanation": "brief explanation in English",
+  "corrected_sentence": "corrected version with minimal edits"
+}}
+```"""
+
+    def detect(self, sentence: str, max_new_tokens: int = 256, temperature: float = 0.1) -> DetectionResult:
+        prompt = self._create_prompt(sentence)
+        messages = [{"role": "user", "content": prompt}]
+
+        text = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        inputs = self.tokenizer(text, return_tensors="pt").to(self.device)
+
+        with torch.no_grad():
+            outputs = self.model.generate(
+                **inputs,
+                max_new_tokens=max_new_tokens,
+                do_sample=temperature > 0,
+                temperature=temperature if temperature > 0 else None,
+                pad_token_id=self.tokenizer.eos_token_id,
+                eos_token_id=self.tokenizer.eos_token_id
+            )
+
+        generated_ids = outputs[0][inputs['input_ids'].shape[1]:]
+        response = self.tokenizer.decode(generated_ids, skip_special_tokens=True)
+
+        return self._parse_response(response, sentence)
+
+    def _parse_response(self, response: str, sentence: str) -> DetectionResult:
+        error_type = 1
+        explanation = ""
+        corrected_sentence = None
+
+        try:
+            json_pattern = r'\{[^{}]*\}'
+            matches = re.findall(json_pattern, response, re.DOTALL)
+
+            if matches:
+                json_str = max(matches, key=len)
+                json_str = re.sub(r'\s+', ' ', json_str)
+                parsed = json.loads(json_str)
+
+                raw_error_type = parsed.get("error_type")
+                explanation = str(parsed.get("explanation", ""))
+                corrected_sentence = parsed.get("corrected_sentence")
+
+                if raw_error_type is not None:
+                    error_type = int(raw_error_type)
+                    if error_type < 1 or error_type > 6:
+                        error_type = 1
+
+        except (json.JSONDecodeError, ValueError, TypeError) as e:
+            explanation = f"Parse error: {str(e)}"
+
+        return DetectionResult(
+            sentence=sentence,
+            error_type=error_type,
+            explanation=explanation,
+            corrected_sentence=corrected_sentence
+        )
+
+
+def main():
+    # scripts -> vanilla -> Qwen2.5_Correction
+    project_root = Path(__file__).parent.parent.parent
+    dataset_path = project_root / 'data' / 'org_data' / 'evaluate_dataset.json'
+    output_path = project_root / 'data' / 'response_data' / 'vanilla_normal_response_7B.json'
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(dataset_path, 'r', encoding='utf-8') as f:
+        dataset = json.load(f)
+
+    detector = ContradictionDetector()
+
+    results = []
+    for item in dataset:
+        result = detector.detect(item['sentence'])
+        results.append({
+            'id': item['id'],
+            'pred_error_type': result.error_type,
+            'pred_error_type_name': ERROR_TYPES.get(result.error_type, "Unknown"),
+            'sentence': item['sentence'],
+            'pred_correction': result.corrected_sentence,
+            'explanation': result.explanation
+        })
+
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
+
+    print(f"Results saved to: {output_path}")
+
+
+if __name__ == "__main__":
+    main()

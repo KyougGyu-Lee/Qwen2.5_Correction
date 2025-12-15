@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "pred_error_type": 1,
+    "pred_error_type_name": "Arithmetic/Total Inconsistency",
+    "sentence": "The team has 20 members: 12 are engineers and 10 are designers.",
+    "pred_correction": "The team has 20 members: 11 are engineers and 9 are designers.",
+    "explanation": "The numbers do not add up correctly; 12 engineers plus 10 designers equal 22, not 20."
+  },
+  {
+    "id": 2,
+    "pred_error_type": 1,
+    "pred_error_type_name": "Arithmetic/Total Inconsistency",
+    "sentence": "The basket contains 15 apples: 9 are red and 8 are green.",
+    "pred_correction": "The basket contains 15 apples: 9 are red and 6 are green.",
+    "explanation": "The numbers do not add up correctly; 9 red apples plus 8 green apples equal 17, not 15."
+  },
+  {
+    "id": 3,
+    "pred_error_type": 1,
+    "pred_error_type_name": "Arithmetic/Total Inconsistency",
+    "sentence": "In the class of 30 students, 18 passed and 15 failed.",
+    "pred_correction": "In the class of 30 students, 18 passed and 12 failed.",
+    "explanation": "The numbers do not add up correctly; 18 + 15 = 33 ≠ 30."
+  },
+  {
+    "id": 4,
+    "pred_error_type": 1,
+    "pred_error_type_name": "Arithmetic/Total Inconsistency",
+    "sentence": "The recipe needs 3 cups of flour: 2 cups for the dough and 2 cups for the topping.",
+    "pred_correction": "The recipe needs 4 cups of flour: 2 cups for the dough and 2 cups for the topping.",
+    "explanation": "The numbers do not add up correctly; 2 cups + 2 cups = 4 cups, not 3 cups."
+  },
+  {
+    "id": 5,
+    "pred_error_type": 1,
+    "pred_error_type_name": "Arithmetic/Total Inconsistency",
+    "sentence": "The trip lasted 7 days: 5 days in Paris and 3 days in Rome.",
+    "pred_correction": "The trip lasted 7 days: 4 days in Paris and 3 days in Rome.",
+    "explanation": "The numbers do not add up correctly (5 + 3 ≠ 7)."
+  },
+  {
+    "id": 6,
+    "pred_error_type": 2,
+    "pred_error_type_name": "Unit/Measurement Mismatch",
+    "sentence": "He is 180 kg tall.",
+    "pred_correction": "He is 180 cm tall.",
+    "explanation": "Height should be measured in units such as meters or feet, not kilograms."
+  },
+  {
+    "id": 7,
+    "pred_error_type": 2,
+    "pred_error_type_name": "Unit/Measurement Mismatch",
+    "sentence": "The bottle holds 2 kilograms of water.",
+    "pred_correction": "The bottle holds 2 liters of water.",
+    "explanation": "Weight should be measured in kilograms or pounds, not in kilograms for a liquid like water."
+  },
+  {
+    "id": 8,
+    "pred_error_type": 4,
+    "pred_error_type_name": "Spatial Relation Inconsistency",
+    "sentence": "She drove 60 minutes to the office.",
+    "pred_correction": "She drove 60 minutes to the office from her home.",
+    "explanation": "Contradictory location statements. The sentence implies the action of driving, which is a movement, but does not specify a destination, making the spatial relation ambiguous."
+  },
+  {
+    "id": 9,
+    "pred_error_type": 2,
+    "pred_error_type_name": "Unit/Measurement Mismatch",
+    "sentence": "The package weighs 3 meters.",
+    "pred_correction": "The package weighs 3 kilograms.",
+    "explanation": "Weight should be measured in units such as kilograms or pounds, not meters."
+  },
+  {
+    "id": 10,
+    "pred_error_type": 2,
+    "pred_error_type_name": "Unit/Measurement Mismatch",
+    "sentence": "The room temperature is 25 kilograms.",
+    "pred_correction": "The room temperature is 25 degrees Celsius.",
+    "explanation": "Temperature should be measured in degrees, not kilograms."
+  },
+  {
+    "id": 11,
+    "pred_error_type": 3,
+    "pred_error_type_name": "Temporal Order/Duration Inconsistency",
+    "sentence": "She started her job in 2022 and graduated from college in 2024.",
+    "pred_correction": "She graduated from college in 2024 and started her job in 2022.",
+    "explanation": "Graduating from college typically occurs before starting a job."
+  },
+  {
+    "id": 12,
+    "pred_error_type": 3,
+    "pred_error_type_name": "Temporal Order/Duration Inconsistency",
+    "sentence": "He got married in 2018 and met his partner in 2020.",
+    "pred_correction": "He met his partner in 2020 and got married in 2021.",
+    "explanation": "Events are in an impossible chronological order; one cannot meet a partner after getting married."
+  },
+  {
+    "id": 13,
+    "pred_error_type": 3,
+    "pred_error_type_name": "Temporal Order/Duration Inconsistency",
+    "sentence": "The conference ended on May 10, and it began on May 12.",
+    "pred_correction": "The conference began on May 12, and it ended on May 10.",
+    "explanation": "The events are in an impossible chronological order; a conference cannot end after it has begun."
+  },
+  {
+    "id": 14,
+    "pred_error_type": 3,
+    "pred_error_type_name": "Temporal Order/Duration Inconsistency",
+    "sentence": "She submitted the application on Friday and wrote it on Sunday.",
+    "pred_correction": "She wrote the application on Sunday and submitted it on Friday.",
+    "explanation": "The temporal order is inconsistent as writing the application cannot happen after submitting it."
+  },
+  {
+    "id": 15,
+    "pred_error_type": 3,
+    "pred_error_type_name": "Temporal Order/Duration Inconsistency",
+    "sentence": "The baby learned to walk at 18 months, and was born at 20 months.",
+    "pred_correction": "The baby learned to walk at 18 months old, and was born 2 years ago.",
+    "explanation": "It's impossible for a baby to learn to walk and be born within the same two-month period."
+  },
+  {
+    "id": 16,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The café is inside the mall, but it is also across the street from the mall.",
+    "pred_correction": "The café is inside the mall, but it is also across the street from the mall's entrance.",
+    "explanation": "Pronoun 'it' is ambiguous and could refer to either the café or the mall, causing confusion."
+  },
+  {
+    "id": 17,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The statue is to the left of the entrance, but it is also to the right of the entrance.",
+    "pred_correction": "The statue is to the left of the entrance, but it is also to the right of the entrance.",
+    "explanation": "Pronouns that create logical contradictions or confusion"
+  },
+  {
+    "id": 18,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The keys are in the drawer, but they are also on the roof.",
+    "pred_correction": "The keys are in the drawer, but they are also on the countertop.",
+    "explanation": "Pronoun 'they' is ambiguous and could refer to either 'keys' or 'the keys are', creating confusion."
+  },
+  {
+    "id": 19,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The hotel is north of the river, but it is also south of the river.",
+    "pred_correction": "The hotel is north of the river, but the river is also south of the hotel.",
+    "explanation": "The sentence uses 'it' as a pronoun, which is ambiguous because it could refer to either the hotel or the river, leading to a contradiction."
+  },
+  {
+    "id": 20,
+    "pred_error_type": 3,
+    "pred_error_type_name": "Temporal Order/Duration Inconsistency",
+    "sentence": "The bookstore is next to the station, but it is also 20 miles away from the station.",
+    "pred_correction": "The bookstore is next to the station, but there is also another bookstore 20 miles away from the station.",
+    "explanation": "The spatial relation is contradictory; something cannot be next to something and also 20 miles away from it."
+  },
+  {
+    "id": 21,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Jina texted Minho after the meeting because he forgot to bring her laptop.",
+    "pred_correction": "Jina texted Minho after the meeting because she forgot to bring her laptop.",
+    "explanation": "The pronoun 'he' is ambiguous as it could refer to either Jina or Minho, causing confusion."
+  },
+  {
+    "id": 22,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Emma called David when she lost his phone.",
+    "pred_correction": "Emma called David when she lost his phone. (Corrected to specify ownership: Emma's or David's)",
+    "explanation": "The pronoun 'his' is ambiguous as it could refer to either Emma or David."
+  },
+  {
+    "id": 23,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Sara thanked Tom because he received the award.",
+    "pred_correction": "Sara thanked Tom because he gave her the award.",
+    "explanation": "Pronoun 'he' is ambiguous as it could refer to either Sara or Tom, creating confusion."
+  },
+  {
+    "id": 24,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Kevin argued with Lucy because she forgot his wallet.",
+    "pred_correction": "Kevin argued with Lucy because she forgot his wallet. (Correcting to clarify: Kevin argued with Lucy because Lucy forgot his wallet.)",
+    "explanation": "Pronoun 'she' is ambiguous as it could refer to either Kevin or Lucy, creating confusion."
+  },
+  {
+    "id": 25,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Mina emailed Joon after he finished her presentation.",
+    "pred_correction": "Mina emailed Joon after he finished his presentation.",
+    "explanation": "The pronoun 'her' is ambiguous as it could refer to either Mina or Joon, causing confusion."
+  },
+  {
+    "id": 26,
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
+    "sentence": "The rock apologized for being late.",
+    "pred_correction": "The person who brought the rock apologized for being late.",
+    "explanation": "Inanimate objects cannot perform human actions like apologizing."
+  },
+  {
+    "id": 27,
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
+    "sentence": "The chair decided to quit its job.",
+    "pred_correction": "The person decided to quit their job.",
+    "explanation": "Inanimate objects cannot perform human actions like quitting a job."
+  },
+  {
+    "id": 28,
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
+    "sentence": "The rain signed the contract yesterday.",
+    "pred_correction": "It rained yesterday.",
+    "explanation": "Inanimate objects cannot perform actions typically associated with humans or animate beings."
+  },
+  {
+    "id": 29,
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
+    "sentence": "The idea ate a sandwich for lunch.",
+    "pred_correction": "John ate a sandwich for lunch.",
+    "explanation": "Inanimate objects cannot perform actions typically associated with animate beings, such as eating."
+  },
+  {
+    "id": 30,
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
+    "sentence": "The calendar argued with the teacher.",
+    "pred_correction": "The calendar disagreed with the teacher.",
+    "explanation": "Inanimate objects cannot perform human actions like arguing."
+  }
+]

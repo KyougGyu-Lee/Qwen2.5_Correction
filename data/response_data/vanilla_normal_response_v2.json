@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The team has 20 members: 12 are engineers and 10 are designers.",
+    "pred_correction": "The teacher was praised because she won his competition.",
+    "explanation": "The sentence incorrectly states that 'the teacher' was praised because 'she won his competition', which contradicts the information given."
+  },
+  {
+    "id": 2,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The basket contains 15 apples: 9 are red and 8 are green.",
+    "pred_correction": "The coffee table ran to catch the bus.",
+    "explanation": "The sentence incorrectly states that 'the coffee table' is running to catch the bus."
+  },
+  {
+    "id": 3,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "In the class of 30 students, 18 passed and 15 failed.",
+    "pred_correction": "In the class of 30 students, 18 passed and 15 failed.",
+    "explanation": "The sentence incorrectly states that 'the teacher' was praised instead of 'the principal'. The correct pronoun should be 'the principal', as they are different individuals."
+  },
+  {
+    "id": 4,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The recipe needs 3 cups of flour: 2 cups for the dough and 2 cups for the topping.",
+    "pred_correction": "The coffee table ran to catch the bus.",
+    "explanation": "The sentence incorrectly states that 'the coffee table' ran to catch the bus."
+  },
+  {
+    "id": 5,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The trip lasted 7 days: 5 days in Paris and 3 days in Rome.",
+    "pred_correction": "The teacher was praised because she won his competition.",
+    "explanation": "The sentence incorrectly states that 'the teacher' was praised because 'she won his competition.' This creates a contradiction as there is no teacher mentioned."
+  },
+  {
+    "id": 6,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "He is 180 kg tall.",
+    "pred_correction": "The person who is 180 kg tall is 180 kg tall.",
+    "explanation": "The pronoun 'he' refers to both 'the person who is 180 kg tall' and 'the person who is 180 kg tall.' This creates ambiguity."
+  },
+  {
+    "id": 7,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The bottle holds 2 kilograms of water.",
+    "pred_correction": "The bottle holds 2 kilograms of water.",
+    "explanation": "The sentence incorrectly uses 'the' as both the subject and the object."
+  },
+  {
+    "id": 8,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "She drove 60 minutes to the office.",
+    "pred_correction": "The teacher praised the student because they won his competition.",
+    "explanation": "The pronoun 'her' refers to both 'the teacher' and 'the student', creating ambiguity."
+  },
+  {
+    "id": 9,
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
+    "sentence": "The package weighs 3 meters.",
+    "pred_correction": "The package weighs 3 metres.",
+    "explanation": "The sentence incorrectly uses 'meters' instead of 'metres', which is incorrect."
+  },
+  {
+    "id": 10,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The room temperature is 25 kilograms.",
+    "pred_correction": "The room temperature is 25 degrees.",
+    "explanation": "The sentence incorrectly uses 'the' instead of 'a', which creates a contradiction."
+  },
+  {
+    "id": 11,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "She started her job in 2022 and graduated from college in 2024.",
+    "pred_correction": "Lisa called Anna because she missed her train.",
+    "explanation": "The sentence incorrectly states that Lisa called Anna because she missed her train."
+  },
+  {
+    "id": 12,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "He got married in 2018 and met his partner in 2020.",
+    "pred_correction": "The teacher was praised because he won his competition.",
+    "explanation": "The sentence incorrectly states that 'the teacher' was praised because he won his competition."
+  },
+  {
+    "id": 13,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The conference ended on May 10, and it began on May 12.",
+    "pred_correction": "The teacher was praised because she won his competition.",
+    "explanation": "The sentence incorrectly states that 'the teacher' was praised because 'she won his competition.' This creates a contradiction as there is no teacher mentioned."
+  },
+  {
+    "id": 14,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "She submitted the application on Friday and wrote it on Sunday.",
+    "pred_correction": "She submitted the application on Friday and wrote it on Sunday.",
+    "explanation": "The pronoun 'she' refers to both Lisa and Anna, which creates ambiguity."
+  },
+  {
+    "id": 15,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The baby learned to walk at 18 months, and was born at 20 months.",
+    "pred_correction": "The teacher praised the student because they won his competition.",
+    "explanation": "The sentence incorrectly states that 'the teacher' is praising the student, which contradicts the information given."
+  },
+  {
+    "id": 16,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The café is inside the mall, but it is also across the street from the mall.",
+    "pred_correction": "The café is located 'across the street' from the mall.",
+    "explanation": "The cafe is described as being 'inside' the mall, which contradicts its position relative to the mall."
+  },
+  {
+    "id": 17,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The statue is to the left of the entrance, but it is also to the right of the entrance.",
+    "pred_correction": "The statue is to the left of the entrance, but it is also to the right of the entrance.",
+    "explanation": "The pronoun 'it' refers to both 'the statue' and 'the entrance', which creates ambiguity."
+  },
+  {
+    "id": 18,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The keys are in the drawer, but they are also on the roof.",
+    "pred_correction": "The keys are in the drawer, but they are also on the roof.",
+    "explanation": "The sentence incorrectly uses 'the' as both the subject and the pronoun, which creates ambiguity."
+  },
+  {
+    "id": 19,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The hotel is north of the river, but it is also south of the river.",
+    "pred_correction": "The hotel is north of the river, but it is also south of the river.",
+    "explanation": "The sentence incorrectly uses 'north' and 'south' as synonyms for 'east' and 'west', which creates a contradiction."
+  },
+  {
+    "id": 20,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The bookstore is next to the station, but it is also 20 miles away from the station.",
+    "pred_correction": "The bookstore is 20 miles away from the station, but it is also 20 miles away from the station.",
+    "explanation": "The sentence incorrectly states that the bookstore is 20 miles away from the station when it is actually 20 miles away from the station."
+  },
+  {
+    "id": 21,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Jina texted Minho after the meeting because he forgot to bring her laptop.",
+    "pred_correction": "Jina texted Minho after the meeting because he forgot to bring her laptop.",
+    "explanation": "The pronoun 'her' refers to both 'Minho' and 'the person who forgot to bring her laptop', creating ambiguity."
+  },
+  {
+    "id": 22,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Emma called David when she lost his phone.",
+    "pred_correction": "The coffee table ran to catch the bus.",
+    "explanation": "The pronoun 'David' refers to both Emma and the person who lost his phone."
+  },
+  {
+    "id": 23,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Sara thanked Tom because he received the award.",
+    "pred_correction": "Sara thanked Mark because he received the award.",
+    "explanation": "The pronoun 'Tom' refers to both Sara and the person who received the award."
+  },
+  {
+    "id": 24,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Kevin argued with Lucy because she forgot his wallet.",
+    "pred_correction": "Kevin argued with Lucy because she forgot his wallet.",
+    "explanation": "The pronoun 'Lucy' refers to both Kevin and the subject 'Kevin', creating ambiguity."
+  },
+  {
+    "id": 25,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "Mina emailed Joon after he finished her presentation.",
+    "pred_correction": "Mina sent an email to Joon after she finished her presentation.",
+    "explanation": "The pronoun 'her' refers to both 'Mina' and 'Joon', creating ambiguity."
+  },
+  {
+    "id": 26,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The rock apologized for being late.",
+    "pred_correction": "The rock apologized for being late.",
+    "explanation": "The pronoun 'it' refers to both 'the rock' and 'the rock', creating ambiguity."
+  },
+  {
+    "id": 27,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The chair decided to quit its job.",
+    "pred_correction": "The chair quit its job.",
+    "explanation": "The pronoun 'its' refers to both the chair and the person who quit their job."
+  },
+  {
+    "id": 28,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The rain signed the contract yesterday.",
+    "pred_correction": "The pencil complained about the noise.",
+    "explanation": "The pronoun 'the' refers to both 'the pencil' and 'the coffee table', creating ambiguity."
+  },
+  {
+    "id": 29,
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
+    "sentence": "The idea ate a sandwich for lunch.",
+    "pred_correction": "The idea eats a sandwich for lunch.",
+    "explanation": "The sentence incorrectly uses 'ate' instead of 'eats', which is incorrect."
+  },
+  {
+    "id": 30,
+    "pred_error_type": 5,
+    "pred_error_type_name": "Pronoun/Referent Ambiguity",
+    "sentence": "The calendar argued with the teacher.",
+    "pred_correction": "The calendar complained with the teacher.",
+    "explanation": "The pronoun 'the' refers to both 'the calendar' and 'the teacher', creating ambiguity."
+  }
+]
