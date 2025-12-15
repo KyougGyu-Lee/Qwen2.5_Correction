@@ -4,7 +4,7 @@
     "pred_error_type": 1,
     "pred_error_type_name": "Arithmetic/Total Inconsistency",
     "sentence": "The team has 20 members: 12 are engineers and 10 are designers.",
-    "pred_correction": "The team has 22 members: 12 are engineers and 10 are designers.",
+    "pred_correction": "The team has 32 members: 12 are engineers and 10 are designers.",
     "explanation": "Arithmetic/Total Inconsistency"
   },
   {
@@ -12,7 +12,7 @@
     "pred_error_type": 1,
     "pred_error_type_name": "Arithmetic/Total Inconsistency",
     "sentence": "The basket contains 15 apples: 9 are red and 8 are green.",
-    "pred_correction": "The basket contains 15 apples: 9 are red and 9 are green.",
+    "pred_correction": "The basket contains 24 apples: 9 are red and 8 are green.",
     "explanation": "Arithmetic/Total Inconsistency"
   },
   {
@@ -20,7 +20,7 @@
     "pred_error_type": 1,
     "pred_error_type_name": "Arithmetic/Total Inconsistency",
     "sentence": "In the class of 30 students, 18 passed and 15 failed.",
-    "pred_correction": "In the class of 33 students, 18 passed and 15 failed.",
+    "pred_correction": "In the class of 30 students, 19 passed and 17 failed.",
     "explanation": "Arithmetic/Total Inconsistency"
   },
   {
@@ -28,23 +28,23 @@
     "pred_error_type": 1,
     "pred_error_type_name": "Arithmetic/Total Inconsistency",
     "sentence": "The recipe needs 3 cups of flour: 2 cups for the dough and 2 cups for the topping.",
-    "pred_correction": "The recipe needs 3 cups of flour: 2 cups for the dough and 1 cup for the topping.",
+    "pred_correction": "The recipe needs 5 cups of flour: 2 cups for the dough and 3 cups for the topping.",
     "explanation": "Arithmetic/Total Inconsistency"
   },
   {
     "id": 5,
     "pred_error_type": 1,
     "pred_error_type_name": "Arithmetic/Total Inconsistency",
-    "sentence": "The trip lasted 7 days: 5 days in Paris and 3 days in Rome.",
-    "pred_correction": "The trip lasted 7 days: 5 days in Paris and 3 days in Rome.",
-    "explanation": "Arithmetic/Total Inconsistency"
+    "sentence": "The trip lasted 8 days: 5 days in Paris and 3 days in Rome.",
+    "pred_correction": "The trip lasted 8 days: 5 days in Paris and 3 days in Rome.",
+    "explanation": "Temporal Order/Duration Inconsistency"
   },
   {
     "id": 6,
     "pred_error_type": 2,
     "pred_error_type_name": "Unit/Measurement Mismatch",
     "sentence": "He is 180 kg tall.",
-    "pred_correction": "He is 180 cm tall.",
+    "pred_correction": "He is 180 meters tall.",
     "explanation": "Wrong or inappropriate units for the context"
   },
   {
@@ -52,8 +52,8 @@
     "pred_error_type": 2,
     "pred_error_type_name": "Unit/Measurement Mismatch",
     "sentence": "The bottle holds 2 kilograms of water.",
-    "pred_correction": "The bottle holds 2 liters of water.",
-    "explanation": "Wrong unit for the context"
+    "pred_correction": "The bottle holds 2 kilograms of water.",
+    "explanation": "Unit/Measurement Mismatch - Wrong or inappropriate units for the context"
   },
   {
     "id": 8,
@@ -67,17 +67,17 @@
     "id": 9,
     "pred_error_type": 2,
     "pred_error_type_name": "Unit/Measurement Mismatch",
-    "sentence": "The package weighs 3 meters.",
+    "sentence": "The package weighs 3 kilograms.",
     "pred_correction": "The package weighs 3 kilograms.",
-    "explanation": "Wrong or inappropriate units for the context"
+    "explanation": "Unit/Measurement Mismatch - Wrong or inappropriate units for the context"
   },
   {
     "id": 10,
     "pred_error_type": 2,
     "pred_error_type_name": "Unit/Measurement Mismatch",
-    "sentence": "The room temperature is 25 kilograms.",
-    "pred_correction": "The room temperature is 25 degrees Celsius.",
-    "explanation": "Wrong or inappropriate units for the context"
+    "sentence": "The room temperature is 25°C.",
+    "pred_correction": "The room temperature is 25°C.",
+    "explanation": "Unit/Measurement Mismatch - Wrong or inappropriate units for the context"
   },
   {
     "id": 11,
@@ -85,7 +85,7 @@
     "pred_error_type_name": "Temporal Order/Duration Inconsistency",
     "sentence": "She started her job in 2022 and graduated from college in 2024.",
     "pred_correction": "She started her job in 2022 and graduated from college in 2024.",
-    "explanation": "The employee started working in 2022 and graduated in 2024."
+    "explanation": "Events in impossible chronological order"
   },
   {
     "id": 12,
@@ -100,24 +100,24 @@
     "pred_error_type": 3,
     "pred_error_type_name": "Temporal Order/Duration Inconsistency",
     "sentence": "The conference ended on May 10, and it began on May 12.",
-    "pred_correction": "The conference ended on May 10, and it began on May 12.",
-    "explanation": "The duration should be written as 'May 10' and 'May 12'"
+    "pred_correction": "The conference began on May 10 and ended on May 12.",
+    "explanation": "Temporal Order/Duration Inconsistency"
   },
   {
     "id": 14,
     "pred_error_type": 4,
     "pred_error_type_name": "Spatial Relation Inconsistency",
     "sentence": "She submitted the application on Friday and wrote it on Sunday.",
-    "pred_correction": "She wrote the application on Friday and submitted it on Sunday.",
-    "explanation": "Events in impossible chronological order"
+    "pred_correction": "She submitted the application on Friday and wrote it on Monday.",
+    "explanation": "Spatial relation inconsistency - Contradictory location statement"
   },
   {
     "id": 15,
-    "pred_error_type": 3,
-    "pred_error_type_name": "Temporal Order/Duration Inconsistency",
-    "sentence": "The baby learned to walk at 18 months, and was born at 20 months.",
-    "pred_correction": "The baby learned to walk at 18 months, and was born at 20 months.",
-    "explanation": "Temporal Order/Duration Inconsistency"
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
+    "sentence": "The baby was born, and learned to walk at 18 months.",
+    "pred_correction": "The baby was born, and learned to walk at 18 months.",
+    "explanation": "Inanimate objects (the baby) cannot perform human or animal actions."
   },
   {
     "id": 16,
@@ -125,7 +125,7 @@
     "pred_error_type_name": "Spatial Relation Inconsistency",
     "sentence": "The café is inside the mall, but it is also across the street from the mall.",
     "pred_correction": "The café is inside the mall.",
-    "explanation": "The café is located inside the mall, but it is also across the street from the mall."
+    "explanation": "Spatial Relation Inconsistency - Contradictory location statement"
   },
   {
     "id": 17,
@@ -133,15 +133,15 @@
     "pred_error_type_name": "Spatial Relation Inconsistency",
     "sentence": "The statue is to the left of the entrance, but it is also to the right of the entrance.",
     "pred_correction": "The statue is to the left of the entrance.",
-    "explanation": "The statue is to the left of the entrance."
+    "explanation": "Spatial relation inconsistency - Contradictory location statement"
   },
   {
     "id": 18,
-    "pred_error_type": 4,
-    "pred_error_type_name": "Spatial Relation Inconsistency",
+    "pred_error_type": 6,
+    "pred_error_type_name": "Action-Agent/Object Mismatch",
     "sentence": "The keys are in the drawer, but they are also on the roof.",
     "pred_correction": "The keys are in the drawer.",
-    "explanation": "The key is on the ground (drawer) and in the room (roof)."
+    "explanation": "Inanimate objects performing human-agent actions"
   },
   {
     "id": 19,
@@ -149,31 +149,31 @@
     "pred_error_type_name": "Spatial Relation Inconsistency",
     "sentence": "The hotel is north of the river, but it is also south of the river.",
     "pred_correction": "The hotel is north of the river.",
-    "explanation": "The hotel is north of the river."
+    "explanation": "Spatial Relation Inconsistency - Contradictory location statement"
   },
   {
     "id": 20,
-    "pred_error_type": 4,
-    "pred_error_type_name": "Spatial Relation Inconsistency",
-    "sentence": "The bookstore is next to the station, but it is also 20 miles away from the station.",
+    "pred_error_type": 2,
+    "pred_error_type_name": "Unit/Measurement Mismatch",
+    "sentence": "The bookstore is 20 miles away from the station.",
     "pred_correction": "The bookstore is 20 miles away from the station.",
-    "explanation": "The bookstore is 20 miles away from the station."
+    "explanation": "Unit/Measurement Mismatch - Wrong or inappropriate units for the context"
   },
   {
     "id": 21,
     "pred_error_type": 6,
     "pred_error_type_name": "Action-Agent/Object Mismatch",
     "sentence": "Jina texted Minho after the meeting because he forgot to bring her laptop.",
-    "pred_correction": "Jina texted Minho after the meeting because he forgot to bring his laptop.",
-    "explanation": "Action-Agent/Object Mismatch"
+    "pred_correction": "Minho texted Jina after the meeting because he forgot to bring her laptop.",
+    "explanation": "Inanimate objects performing human-agent actions"
   },
   {
     "id": 22,
     "pred_error_type": 6,
     "pred_error_type_name": "Action-Agent/Object Mismatch",
     "sentence": "Emma called David when she lost his phone.",
-    "pred_correction": "Emma called David when she lost her phone.",
-    "explanation": "Action-Agent/Object Mismatch"
+    "pred_correction": "Emma called David to get his phone.",
+    "explanation": "Inanimate objects (phone) cannot perform human or animal actions."
   },
   {
     "id": 23,
@@ -181,47 +181,47 @@
     "pred_error_type_name": "Action-Agent/Object Mismatch",
     "sentence": "Sara thanked Tom because he received the award.",
     "pred_correction": "Sara thanked Tom because he received the award.",
-    "explanation": "Action-Agent/Object Mismatch"
+    "explanation": "In the sentence 'Sara thanked Tom because he received the award.', the pronoun 'he' refers to Sara, which is incorrect as she is female."
   },
   {
     "id": 24,
     "pred_error_type": 6,
     "pred_error_type_name": "Action-Agent/Object Mismatch",
-    "sentence": "Kevin argued with Lucy because she forgot his wallet.",
+    "sentence": "Kevin argued with Lucy because he forgot his wallet.",
     "pred_correction": "Kevin argued with Lucy because he forgot his wallet.",
-    "explanation": "Action-Agent/Object Mismatch"
+    "explanation": "Inanimate objects (the lamp) cannot perform human or animal actions."
   },
   {
     "id": 25,
     "pred_error_type": 6,
     "pred_error_type_name": "Action-Agent/Object Mismatch",
-    "sentence": "Mina emailed Joon after he finished her presentation.",
-    "pred_correction": "Mina emailed Joon after he finished his presentation.",
-    "explanation": "Mina should have used 'Joon' as the agent instead of 'Joon'"
+    "sentence": "Mina emailed Joon after she finished her presentation.",
+    "pred_correction": "Mina emailed Joon after she finished her presentation.",
+    "explanation": "Inanimate objects performing human/animate actions"
   },
   {
     "id": 26,
     "pred_error_type": 6,
     "pred_error_type_name": "Action-Agent/Object Mismatch",
     "sentence": "The rock apologized for being late.",
-    "pred_correction": "The worker apologized for being late.",
-    "explanation": "Inanimate object performing human action"
+    "pred_correction": "The man apologized for being late.",
+    "explanation": "Inanimate objects do not perform human or animal actions."
   },
   {
     "id": 27,
     "pred_error_type": 6,
     "pred_error_type_name": "Action-Agent/Object Mismatch",
     "sentence": "The chair decided to quit its job.",
-    "pred_correction": "The employee decided to quit its job.",
-    "explanation": "Inanimate object performing human action"
+    "pred_correction": "The man decided to quit his job.",
+    "explanation": "Inanimate objects (chair) cannot perform human or animal actions."
   },
   {
     "id": 28,
     "pred_error_type": 6,
     "pred_error_type_name": "Action-Agent/Object Mismatch",
     "sentence": "The rain signed the contract yesterday.",
-    "pred_correction": "The director signed the contract yesterday.",
-    "explanation": "Action-Agent/Object Mismatch"
+    "pred_correction": "The man signed the contract yesterday.",
+    "explanation": "Inanimate objects (the rain) cannot perform human or animal actions."
   },
   {
     "id": 29,
@@ -229,14 +229,14 @@
     "pred_error_type_name": "Action-Agent/Object Mismatch",
     "sentence": "The idea ate a sandwich for lunch.",
     "pred_correction": "The person ate a sandwich for lunch.",
-    "explanation": "Inanimate object performing human action"
+    "explanation": "Inanimate objects performing human or animal actions"
   },
   {
     "id": 30,
     "pred_error_type": 6,
     "pred_error_type_name": "Action-Agent/Object Mismatch",
-    "sentence": "The calendar argued with the teacher.",
-    "pred_correction": "The teacher argued with the calendar.",
-    "explanation": "Action-Agent/Object Mismatch"
+    "sentence": "The student argued with the teacher.",
+    "pred_correction": "The student argued with the teacher.",
+    "explanation": "Inanimate objects (the student) performing human (teacher) actions"
   }
 ]

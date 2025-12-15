@@ -42,6 +42,7 @@ Identify the error type (1-6) and provide the corrected sentence. Respond ONLY w
 
 ```json
 {{
+  "has_error": true,
   "error_type": 1-6,
   "corrected_sentence": "corrected version with minimal edits"
 }}
@@ -51,6 +52,7 @@ Identify the error type (1-6) and provide the corrected sentence. Respond ONLY w
 def create_response(error_type: int, corrected_sentence: str) -> str:
     return f'''```json
 {{
+  "has_error": true,
   "error_type": {error_type},
   "corrected_sentence": "{corrected_sentence}"
 }}
@@ -103,6 +105,7 @@ def main():
     # 데이터셋 준비
     print(f"Loading dataset: {data_path}")
     train_dataset = prepare_dataset(str(data_path))
+    train_dataset = train_dataset.shuffle(seed=42)
     print(f"Dataset size: {len(train_dataset)}")
 
     # LoRA 설정
@@ -118,12 +121,12 @@ def main():
     # 학습 설정
     training_args = SFTConfig(
         output_dir=str(output_dir),
-        num_train_epochs=50,
+        num_train_epochs=25,
         per_device_train_batch_size=4,
         gradient_accumulation_steps=2,
-        learning_rate=2e-4,
+        learning_rate=1e-4,
         lr_scheduler_type="cosine",
-        warmup_ratio=0.03,
+        warmup_ratio=0.05,
         logging_steps=10,
         save_steps=50,
         bf16=True,
@@ -131,7 +134,7 @@ def main():
         completion_only_loss=True,
         packing=False,
         report_to="wandb",
-    run_name="qwen2.5-0.5b-lora-v1",
+        run_name="qwen2.5-0.5b-lora-v2",
     )
 
     # Trainer 생성 및 학습

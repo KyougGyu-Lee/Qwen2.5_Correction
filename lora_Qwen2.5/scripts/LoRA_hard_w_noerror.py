@@ -1,13 +1,6 @@
 """
-Contradiction Detection and Correction using Qwen2.5-0.5B-Instruct
-
-6가지 오류 유형 탐지 및 수정:
-1. Arithmetic/Total Inconsistency - 산술/총합 불일치
-2. Unit/Measurement Mismatch - 단위/측정 불일치
-3. Temporal Order/Duration Inconsistency - 시간 순서/기간 불일치
-4. Spatial Relation Inconsistency - 공간 관계 불일치
-5. Pronoun/Referent Ambiguity - 대명사/지시 대상 모호성
-6. Action-Agent/Object Mismatch - 행위-행위자/대상 불일치
+LoRA Fine-tuned Qwen2.5-0.5B Evaluation (Hard Data - TWO errors)
+With No Error option
 """
 
 import torch
@@ -32,24 +25,24 @@ ERROR_TYPES = {
 
 @dataclass
 class DetectionResult:
-    """탐지 결과"""
     sentence: str
     has_error: bool
-    error_type: int
+    error_type_1: Optional[int]
+    error_type_2: Optional[int]
     explanation: str
     corrected_sentence: Optional[str]
 
 
 class ContradictionDetector:
-    def __init__(self, model_name: str = "Qwen/Qwen2.5-0.5B-Instruct", device: str = "auto"):
-        print(f"Loading model: {model_name}")
+    def __init__(self, model_path: str, device: str = "auto"):
+        print(f"Loading model: {model_path}")
 
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 
         device_map = "auto" if device == "auto" else {"": 0 if device == "cuda" else "cpu"}
 
         self.model = AutoModelForCausalLM.from_pretrained(
-            model_name,
+            model_path,
             torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
             device_map=device_map,
             trust_remote_code=True
@@ -60,62 +53,46 @@ class ContradictionDetector:
 
     def _create_prompt(self, sentence: str) -> str:
         return f"""You are an expert at detecting logical and semantic errors in text.
+The following sentence may contain exactly TWO errors. Identify both error types and correct them.
 
 ## Error Types:
 0. No Error - The sentence is logically correct
-
 1. Arithmetic/Total Inconsistency - Numbers don't add up correctly
-   Examples:
-   - "The box has 8 chocolates: 3 dark and 6 milk." (3+6=9 ≠ 8)
-   - "Our family has 5 people: my parents, my sister, and me." (2+1+1=4 ≠ 5)
-   - "The playlist has 12 songs: 7 pop and 4 rock." (7+4=11 ≠ 12)
-
 2. Unit/Measurement Mismatch - Wrong or inappropriate units for the context
-   Examples:
-   - "The baby weighs 50 centimeters." (weight should use kg/lbs, not cm)
-   - "The pool is 3 kilograms deep." (depth should use meters/feet, not kg)
-   - "The movie is 2 kilometers long." (duration should use hours/minutes, not km)
-
 3. Temporal Order/Duration Inconsistency - Events in impossible chronological order
-   Examples:
-   - "He retired in 2010 and started working in 2015." (retired before starting work)
-   - "She received the diploma in 2018 and enrolled in 2020." (graduated before enrolling)
-   - "The store closed at 8 PM and opened at 10 PM the same day." (closed before opening)
-
 4. Spatial Relation Inconsistency - Contradictory location/position statements
-   Examples:
-   - "The park is east of the library, but also west of the library."
-   - "The cat is under the bed, but also on top of the roof at the same time."
-   - "The office is on the 5th floor, but also in the basement."
-
-5. Pronoun/Referent Ambiguity - Pronouns that create logical contradictions or confusion
-   Examples:
-   - "Lisa called Anna because she missed her train." (who missed whose train?)
-   - "The teacher praised the student because she won his competition." (gender mismatch)
-   - "Mark helped Jake move his furniture to his new apartment." (whose furniture? whose apartment?)
-
+5. Pronoun/Referent Ambiguity - Pronouns that don't match the gender or identity of the person
 6. Action-Agent/Object Mismatch - Inanimate objects performing human/animate actions
-   Examples:
-   - "The pencil complained about the noise."
-   - "The window dreamed of becoming famous."
-   - "The coffee table ran to catch the bus."
 
-## Input Sentence:
+## Example 1 (Arithmetic + Unit):
+Input: "The warehouse report says inventory totals 500 items: 280 in section A and 250 in section B. It also notes the storage temperature is maintained at 15 kilometers."
+Output: {{"has_error": true, "error_type_1": 1, "error_type_2": 2, "explanation": "280+250=530 not 500, temperature should be in Celsius not kilometers", "corrected_sentence": "The warehouse report says inventory totals 530 items: 280 in section A and 250 in section B. It also notes the storage temperature is maintained at 15 degrees Celsius."}}
+
+## Example 2 (Temporal + Spatial):
+Input: "The announcement says the store opened in 2020 and was founded in 2022. It also says the store is located inside the mall but also across the street from the mall."
+Output: {{"has_error": true, "error_type_1": 3, "error_type_2": 4, "explanation": "Store cannot open before being founded, and cannot be both inside and across from the mall", "corrected_sentence": "The announcement says the store was founded in 2020 and opened in 2022. It also says the store is located inside the mall."}}
+
+## Example 3 (Pronoun + Action-Agent):
+Input: "Emily finished her project early. He then submitted it to the manager. The desk reviewed the submission and approved it immediately."
+Output: {{"has_error": true, "error_type_1": 5, "error_type_2": 6, "explanation": "Emily is female so should use 'she' not 'he', and a desk cannot review submissions", "corrected_sentence": "Emily finished her project early. She then submitted it to the manager. The manager reviewed the submission and approved it immediately."}}
+
+## Input Sentence (may contain TWO errors):
 "{sentence}"
 
 ## Task:
-Analyze the sentence and respond ONLY with a valid JSON object:
+Determine if the sentence has errors. If it does, identify both error types (1-6) and provide the corrected sentence. If no errors exist, set has_error to false. Respond ONLY with a valid JSON object:
 
 ```json
 {{
   "has_error": true or false,
-  "error_type": 1-6 if has_error is true, null if has_error is false,
-  "explanation": "brief explanation in English",
-  "corrected_sentence": "corrected version with minimal edits" or null if no error
+  "error_type_1": 0-6 (first error type, 0 if no error),
+  "error_type_2": 0-6 (second error type, 0 if no error),
+  "explanation": "brief explanation of errors or why no error exists",
+  "corrected_sentence": "corrected version or null if no error"
 }}
 ```"""
 
-    def detect(self, sentence: str, max_new_tokens: int = 256, temperature: float = 0.1) -> DetectionResult:
+    def detect(self, sentence: str, max_new_tokens: int = 512, temperature: float = 0.1) -> DetectionResult:
         prompt = self._create_prompt(sentence)
         messages = [{"role": "user", "content": prompt}]
 
@@ -139,7 +116,8 @@ Analyze the sentence and respond ONLY with a valid JSON object:
 
     def _parse_response(self, response: str, sentence: str) -> DetectionResult:
         has_error = False
-        error_type = 0
+        error_type_1 = None
+        error_type_2 = None
         explanation = ""
         corrected_sentence = None
 
@@ -153,19 +131,22 @@ Analyze the sentence and respond ONLY with a valid JSON object:
                 parsed = json.loads(json_str)
 
                 has_error = bool(parsed.get("has_error", False))
-                raw_error_type = parsed.get("error_type")
                 explanation = str(parsed.get("explanation", ""))
                 corrected_sentence = parsed.get("corrected_sentence")
 
                 if has_error:
-                    if raw_error_type is not None:
-                        error_type = int(raw_error_type)
-                        if error_type < 1 or error_type > 6:
-                            error_type = 1
-                    else:
-                        error_type = 1
-                else:
-                    error_type = 0
+                    raw_type_1 = parsed.get("error_type_1")
+                    raw_type_2 = parsed.get("error_type_2")
+
+                    if raw_type_1 is not None:
+                        error_type_1 = int(raw_type_1)
+                        if error_type_1 < 1 or error_type_1 > 6:
+                            error_type_1 = 1
+
+                    if raw_type_2 is not None:
+                        error_type_2 = int(raw_type_2)
+                        if error_type_2 < 1 or error_type_2 > 6:
+                            error_type_2 = 1
 
         except (json.JSONDecodeError, ValueError, TypeError) as e:
             explanation = f"Parse error: {str(e)}"
@@ -173,24 +154,25 @@ Analyze the sentence and respond ONLY with a valid JSON object:
         return DetectionResult(
             sentence=sentence,
             has_error=has_error,
-            error_type=error_type,
+            error_type_1=error_type_1,
+            error_type_2=error_type_2,
             explanation=explanation,
             corrected_sentence=corrected_sentence
         )
 
 
 def main():
-    # 프로젝트 루트 기준 상대 경로 (scripts -> vanilla -> Qwen2.5_Correction)
     project_root = Path(__file__).parent.parent.parent
-    dataset_path = project_root / 'data' / 'org_data' / 'evaluate_dataset.json'
-    output_path = project_root / 'data' / 'response_data' / 'vanilla_normal_response.json'
+    model_path = project_root / 'lora_Qwen2.5' / 'merged_model'
+    dataset_path = project_root / 'data' / 'org_data' / 'eval_hard_data.json'
+    output_path = project_root / 'data' / 'response_data' / 'lora' / 'lora_hard_w_noerror.json'
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(dataset_path, 'r', encoding='utf-8') as f:
         dataset = json.load(f)
 
-    detector = ContradictionDetector()
+    detector = ContradictionDetector(str(model_path))
 
     results = []
     for item in dataset:
@@ -198,8 +180,10 @@ def main():
         results.append({
             'id': item['id'],
             'pred_has_error': result.has_error,
-            'pred_error_type': result.error_type,
-            'pred_error_type_name': ERROR_TYPES.get(result.error_type, "Unknown"),
+            'pred_error_type_1': result.error_type_1,
+            'pred_error_type_1_name': ERROR_TYPES.get(result.error_type_1, "Unknown") if result.error_type_1 else None,
+            'pred_error_type_2': result.error_type_2,
+            'pred_error_type_2_name': ERROR_TYPES.get(result.error_type_2, "Unknown") if result.error_type_2 else None,
             'sentence': item['sentence'],
             'pred_correction': result.corrected_sentence,
             'explanation': result.explanation
